@@ -47,6 +47,7 @@ public class OperationLogServiceImpl implements OperationLogService {
                 .eq(StringUtil.isNotBlank(pageQuery.getOperator()), LogRecordInfo::getOperator, pageQuery.getOperator())
                 .orderByDesc(LogRecordInfo::getCreateTime);
         IPage<LogRecordInfo> selectPage = operationLogMapper.selectPage(pageQuery, queryWrapper);
+        operationLogMapper.findAllByActionAfterAndBizNoIsNotNull(pageQuery.getBizNo(),pageQuery.getBizNo());
         return selectPage.convert(each -> BeanUtil.convert(each, LogRecordRespDTO.class));
     }
 

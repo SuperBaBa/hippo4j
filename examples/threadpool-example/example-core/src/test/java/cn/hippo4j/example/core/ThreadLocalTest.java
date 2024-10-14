@@ -15,19 +15,15 @@
  * limitations under the License.
  */
 
-package cn.hippo4j.config.mapper;
+package cn.hippo4j.example.core;
 
-import cn.hippo4j.config.model.LogRecordInfo;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
+public class ThreadLocalTest {
 
-import java.util.List;
+    public static final ThreadLocal<String> THREAD_LOCAL = new ThreadLocal<>();
 
-/**
- * Operation log mapper.
- */
-@Mapper
-public interface OperationLogMapper extends BaseMapper<LogRecordInfo> {
-
-    List<LogRecordInfo> findAllByActionAfterAndBizNoIsNotNull(String actionAfter, String bizNo);
+    public static void main(String[] args) {
+        THREAD_LOCAL.set(String.valueOf(100));
+        System.gc();
+        System.out.println(THREAD_LOCAL.get());
+    }
 }
